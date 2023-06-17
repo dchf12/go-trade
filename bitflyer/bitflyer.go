@@ -188,10 +188,12 @@ LOOP:
 					if k == "message" {
 						marshaTic, err := json.Marshal(bin)
 						if err != nil {
+							log.Printf("marshal err=%v", err.Error())
 							continue LOOP
 						}
 						var ticker Ticker
 						if err := json.Unmarshal(marshaTic, &ticker); err != nil {
+							log.Printf("unmarshal err=%v", err.Error())
 							continue LOOP
 						}
 						ch <- ticker
