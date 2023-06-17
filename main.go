@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"time"
 	"trade/bitflyer"
 	"trade/config"
 	"trade/utils"
@@ -14,12 +13,15 @@ func init() {
 
 func main() {
 	apiClient := bitflyer.New(config.Config.APIKey, config.Config.APISecret)
-	ticker, err := apiClient.Ticker("BTC_JPY")
-	if err != nil {
-		panic(err)
+
+	order := &bitflyer.Order{
+		ProductCode:     config.Config.ProductCode,
+		ChildOrderType:  "MARKET",
+		Side:            "SELL",
+		Size:            0.0001,
+		MinuteToExpires: 1,
+		TimeInForce:     "GTC",
 	}
-	fmt.Println(ticker)
-	fmt.Println(ticker.MidPrice())
-	fmt.Println(ticker.DateTime())
-	fmt.Println(ticker.TruncateDateTime(time.Hour))
+	res, _ := apiClient.SendOrder(order)
+	fmt.Println(res.ChildOrderAcceptanceID)
 }
