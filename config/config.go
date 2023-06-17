@@ -9,9 +9,10 @@ import (
 )
 
 type ConfigList struct {
-	APIKey    string
-	APISecret string
-	LogFile   string
+	APIKey      string
+	APISecret   string
+	LogFile     string
+	ProductCode string
 }
 
 var Config ConfigList
@@ -28,8 +29,9 @@ func init() {
 	}
 
 	Config = ConfigList{
-		APIKey:    cfg.Section("bitflyer").Key("api_key").String(),
-		APISecret: cfg.Section("bitflyer").Key("api_secret").String(),
-		LogFile:   cfg.Section("trade").Key("log_file").String(),
+		APIKey:      cfg.Section("bitflyer").Key("api_key").String(),
+		APISecret:   cfg.Section("bitflyer").Key("api_secret").String(),
+		LogFile:     cfg.Section("trade").Key("log_file").String(),
+		ProductCode: cfg.Section("trade").Key("product_code").String(),
 	}
 }
